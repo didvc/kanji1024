@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>kanji1024 card</title>
+<!-- Source of images/og.png (1200×630); rendered by tools/screenshots.mjs. -->
+<style>
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body { background: #f3eee4; color: #1f1b16; font-family: serif; position: relative; }
+  .seal { position: absolute; left: 80px; top: 72px; width: 104px; height: 104px; border-radius: 9px; background: #b53a26; color: #f3eee4;
+          display: grid; place-items: center; font-size: 66px; transform: rotate(-3deg); }
+  h1 { position: absolute; left: 216px; top: 66px; margin: 0; font-size: 76px; font-weight: normal; letter-spacing: .01em; }
+  .sub { position: absolute; left: 220px; top: 160px; margin: 0; font-size: 30px; font-style: italic; color: #6c635a; }
+  .from { position: absolute; left: 82px; top: 282px; font-size: 30px; color: #6c635a; }
+  .from b { font-weight: normal; color: #1f1b16; }
+  .kanji { position: absolute; left: 76px; top: 336px; font-size: 56px; letter-spacing: .05em; white-space: nowrap; }
+  .kanji .m { color: #b53a26; }
+  .foot { position: absolute; left: 82px; right: 80px; bottom: 54px; display: flex; justify-content: space-between; font-size: 24px; color: #6c635a; }
+  .rule { position: absolute; left: 82px; bottom: 104px; width: 70px; border-top: 3px solid #b53a26; }
+</style>
+</head>
+<body>
+<div class="seal" lang="ja">漢</div>
+<h1>kanji1024</h1>
+<p class="sub">bytes, written in the kanji every child learns</p>
+<div class="from">“<b>Hello, world!</b>” becomes</div>
+<div class="kanji" id="k" lang="ja"></div>
+<div class="rule"></div>
+<div class="foot"><span>1026 school kanji · 10 bits each · optional seal 印</span><span>didvc.github.io/kanji1024</span></div>
+<script type="module">
+  import { encodeText, describe } from "../src/kanji1024.mjs";
+  const grade = ["#2f5577", "#3f6e3a", "#806019", "#8a3556", "#22706d", "#5f4386"];
+  const box = document.getElementById("k");
+  for (const c of encodeText("Hello, world!", { seal: true, group: 4 })) {
+    const d = describe(c), s = document.createElement("span");
+    s.textContent = c;
+    if (d?.role === "data") s.style.color = grade[d.grade - 1];
+    else if (d) s.className = "m";
+    box.append(s);
+  }
+  document.documentElement.dataset.ready = "1";
+</script>
+</body>
+</html>

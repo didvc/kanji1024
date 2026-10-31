@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use kanji1024, please cite it as below."
+type: software
+title: "kanji1024: a binary-to-text encoding over the 1026 kyōiku kanji"
+abstract: >-
+  kanji1024 writes arbitrary bytes as the kanji taught in Japanese primary
+  school, ten bits per character, with an optional 20-bit checksum. This
+  release contains the specification, the character table, a reference
+  library, a command line tool and a browser workbench.
+authors:
+  - name: "Aesthetic Vulpes"
+    website: "https://github.com/didvc/"
+version: 1.0.0
+date-released: 2026-10-31
+license:
+  - Apache-2.0
+  - CC-BY-4.0
+repository-code: "https://github.com/didvc/kanji1024"
+url: "https://didvc.github.io/kanji1024/"
+keywords:
+  - binary-to-text encoding
+  - kanji
+  - kyōiku kanji
+  - checksum
+  - human-readable identifiers

@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kanji1024</title>
+<meta name="description" content="Write any data as the 1026 kanji taught in Japanese primary school, and read it back. Runs entirely in your browser.">
+<meta name="color-scheme" content="light dark">
+<meta name="author" content="Aesthetic Vulpes">
+<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1a1714" media="(prefers-color-scheme: dark)">
+<link rel="canonical" href="https://didvc.github.io/kanji1024/">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="assets/site.webmanifest">
+<link rel="license" href="https://github.com/didvc/kanji1024/blob/main/LICENSE">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="kanji1024">
+<meta property="og:title" content="kanji1024 — bytes, written in the kanji every child learns">
+<meta property="og:description" content="Write any data as the 1026 kanji taught in Japanese primary school, and read it back. Runs entirely in your browser.">
+<meta property="og:url" content="https://didvc.github.io/kanji1024/">
+<meta property="og:image" content="https://didvc.github.io/kanji1024/images/og.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="kanji1024: the words Hello, world! written as fourteen colour-coded kanji with a red seal.">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="ja_JP">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "@id": "https://didvc.github.io/kanji1024/#app",
+      "name": "kanji1024",
+      "alternateName": "kanji1024 workbench",
+      "url": "https://didvc.github.io/kanji1024/",
+      "description": "A binary-to-text encoding that writes any data as the 1026 kanji taught in Japanese primary school, ten bits per character, with an optional checksum. Encodes and decodes entirely in the browser.",
+      "applicationCategory": "DeveloperApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript with ES module support.",
+      "softwareVersion": "1.0.0",
+      "inLanguage": ["en", "ja"],
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "image": "https://didvc.github.io/kanji1024/images/og.png",
+      "screenshot": "https://didvc.github.io/kanji1024/images/encode.png",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "author": { "@id": "https://github.com/didvc/#author" },
+      "keywords": "binary-to-text encoding, kanji, kyōiku kanji, checksum, base1024"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://github.com/didvc/kanji1024#code",
+      "name": "kanji1024",
+      "codeRepository": "https://github.com/didvc/kanji1024",
+      "programmingLanguage": "JavaScript",
+      "runtimePlatform": "Web browser; server-side JavaScript runtime for the command line tool",
+      "license": "https://www.apache.org/licenses/LICENSE-2.0",
+      "targetProduct": { "@id": "https://didvc.github.io/kanji1024/#app" },
+      "author": { "@id": "https://github.com/didvc/#author" }
+    },
+    {
+      "@type": "TechArticle",
+      "name": "kanji1024 specification",
+      "url": "https://github.com/didvc/kanji1024/blob/main/SPEC.md",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "about": { "@id": "https://didvc.github.io/kanji1024/#app" },
+      "author": { "@id": "https://github.com/didvc/#author" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://github.com/didvc/#author",
+      "name": "Aesthetic Vulpes",
+      "url": "https://github.com/didvc/"
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="assets/style.css">
+<script type="module" src="assets/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#work" data-i18n="skip">Skip to the workbench</a>
+
+<header class="masthead">
+  <div class="seal" aria-hidden="true"><span lang="ja">漢</span></div>
+  <div class="title">
+    <h1>kanji1024</h1>
+    <p class="sub" data-i18n="tagline">bytes, written in the kanji every child learns</p>
+  </div>
+  <div class="prefs">
+    <div class="seg" role="group" aria-label="Language / 言語">
+      <button type="button" data-lang="en">EN</button>
+      <button type="button" data-lang="ja" lang="ja">日本語</button>
+    </div>
+    <label class="theme"><span class="sr" data-i18n="theme">Theme</span>
+      <select id="theme">
+        <option value="auto" data-i18n="themeAuto">Auto</option>
+        <option value="light" data-i18n="themeLight">Washi</option>
+        <option value="dark" data-i18n="themeDark">Sumi</option>
+      </select>
+    </label>
+  </div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections" data-i18n-aria-label="sections">
+  <button role="tab" id="tab-work" aria-controls="work" data-tab="work"><span lang="ja">一</span> <span data-i18n="tabWork">Workbench</span></button>
+  <button role="tab" id="tab-alphabet" aria-controls="alphabet" data-tab="alphabet"><span lang="ja">二</span> <span data-i18n="tabAlphabet">Alphabet</span></button>
+  <button role="tab" id="tab-how" aria-controls="how" data-tab="how"><span lang="ja">三</span> <span data-i18n="tabHow">How it works</span></button>
+</nav>
+
+<main>
+<!-- ── workbench ─────────────────────────────────────────────────────────── -->
+<section id="work" role="tabpanel" aria-labelledby="tab-work">
+  <h2 class="sr" data-i18n="tabWork">Workbench</h2>
+  <div class="toolbar">
+    <div class="seg big" role="group" aria-label="Direction" data-i18n-aria-label="direction">
+      <button type="button" data-mode="encode" data-i18n="encode">Encode</button>
+      <button type="button" data-mode="decode" data-i18n="decode">Decode</button>
+    </div>
+    <button type="button" id="swap" class="ghost" data-i18n-title="swapTitle" title="Use the output as the new input"><span aria-hidden="true">⇄</span> <span data-i18n="swap">Swap</span></button>
+    <div class="presets">
+      <span class="sc" data-i18n="tryLabel">Try</span>
+      <button type="button" class="link" data-preset="hello" data-i18n="presetHello">a greeting</button>
+      <button type="button" class="link" data-preset="digest" data-i18n="presetDigest">a fingerprint</button>
+      <button type="button" class="link" data-preset="damaged" data-i18n="presetDamaged">a damaged copy</button>
+    </div>
+  </div>
+
+  <div class="panes">
+    <div class="pane" id="in-pane">
+      <div class="pane-head">
+        <label for="input" class="sc" id="in-label" data-i18n="input">Input</label>
+        <select id="kind" aria-label="Input kind" data-i18n-aria-label="kindLabel">
+          <option value="text" data-i18n="kindText">Text</option>
+          <option value="hex" data-i18n="kindHex">Hex</option>
+          <option value="base64" data-i18n="kindBase64">Base64</option>
+          <option value="digest" data-i18n="kindDigest">SHA-256 of text</option>
+          <option value="file" data-i18n="kindFile">File</option>
+        </select>
+        <button type="button" id="clear" class="link" data-i18n="clear">Clear</button>
+      </div>
+      <div class="drop" id="drop">
+        <textarea id="input" spellcheck="false" autocomplete="off" rows="9" aria-describedby="in-hint problems"></textarea>
+        <div class="file" id="file-box" hidden>
+          <p id="file-name" data-i18n="fileNone">No file chosen.</p>
+          <label class="button"><input type="file" id="file" hidden><span data-i18n="fileChoose">Choose a file</span></label>
+          <p class="hint" data-i18n="fileHint">…or drop one here. Nothing leaves this page.</p>
+        </div>
+      </div>
+      <p class="hint" id="in-hint"></p>
+    </div>
+
+    <div class="pane" id="out-pane">
+      <div class="pane-head">
+        <span class="sc" id="out-label" data-i18n="output">Output</span>
+        <select id="view" aria-label="Show decoded bytes as" data-i18n-aria-label="viewLabel" hidden>
+          <option value="text" data-i18n="kindText">Text</option>
+          <option value="hex" data-i18n="kindHex">Hex</option>
+          <option value="base64" data-i18n="kindBase64">Base64</option>
+        </select>
+        <span class="actions">
+          <button type="button" id="copy" class="link" data-i18n="copy">Copy</button>
+          <button type="button" id="download" class="link" data-i18n="download">Download</button>
+          <button type="button" id="share" class="link" data-i18n="share">Link</button>
+        </span>
+      </div>
+      <div id="output" class="output" tabindex="0" role="textbox" aria-readonly="true" aria-multiline="true" aria-labelledby="out-label" aria-describedby="out-keys" lang="ja"></div>
+      <p class="sr" id="out-keys" data-i18n="outKeys">Use the arrow keys to inspect each kanji.</p>
+      <div id="problems" class="problems" role="status"></div>
+    </div>
+  </div>
+
+  <div class="options">
+    <fieldset id="enc-opts">
+      <legend data-i18n="encOpts">Encoding</legend>
+      <label class="check"><input type="checkbox" id="seal"> <span><span data-i18n="optSeal">Add a seal</span> <span lang="ja" class="mark">印</span></span></label>
+      <p class="hint" data-i18n="optSealHint">Two extra characters that catch copying mistakes.</p>
+      <label><span data-i18n="optGroup">Group every</span>
+        <select id="group">
+          <option value="0" data-i18n="none">no grouping</option>
+          <option value="4" data-i18n="group4">4 characters (5 bytes)</option>
+          <option value="8" data-i18n="group8">8 characters (10 bytes)</option>
+        </select></label>
+      <label><span data-i18n="optWrap">Line width</span>
+        <select id="wrap">
+          <option value="0" data-i18n="noWrap">no wrapping</option>
+          <option value="20">20</option>
+          <option value="40">40</option>
+          <option value="80">80</option>
+        </select></label>
+      <label><span data-i18n="optSep">Group separator</span>
+        <select id="sep">
+          <option value="ideo" data-i18n="sepIdeo">full-width space</option>
+          <option value="ascii" data-i18n="sepAscii">half-width space</option>
+        </select></label>
+    </fieldset>
+    <fieldset id="dec-opts">
+      <legend data-i18n="decOpts">Decoding</legend>
+      <label class="check"><input type="checkbox" id="lenient"> <span data-i18n="optLenient">Forgiving</span></label>
+      <p class="hint" data-i18n="optLenientHint">Skip stray marks, brackets and look-alike forms, and report problems as warnings instead of stopping.</p>
+    </fieldset>
+    <fieldset>
+      <legend data-i18n="dispOpts">Display</legend>
+      <label class="check"><input type="checkbox" id="grades"> <span data-i18n="optGrades">Colour by school grade</span></label>
+      <label class="check"><input type="checkbox" id="lookalikes"> <span data-i18n="optLook">Mark look-alikes</span></label>
+      <p class="hint" data-i18n="optLookHint">Underlines characters that are easy to confuse by hand, such as 未 and 末.</p>
+      <div class="legend" id="grade-legend" aria-hidden="true"></div>
+    </fieldset>
+  </div>
+
+  <dl class="stats" id="stats"></dl>
+
+  <details class="compare">
+    <summary data-i18n="compare">Compare with other notations</summary>
+    <div id="compare"></div>
+  </details>
+
+  <aside class="inspector" id="inspector" aria-live="polite" aria-label="Inspector" data-i18n-aria-label="inspector">
+    <p class="hint" data-i18n="inspectHint">Point at or tap a kanji to inspect it.</p>
+  </aside>
+</section>
+
+<!-- ── alphabet ──────────────────────────────────────────────────────────── -->
+<section id="alphabet" role="tabpanel" aria-labelledby="tab-alphabet" hidden>
+  <h2 class="sr" data-i18n="tabAlphabet">Alphabet</h2>
+  <p class="lede" data-i18n="alphaLede">All 1026 kanji of the 2020 school allocation table. 1024 of them carry ten bits each, numbered in code point order; 終 closes a short final block and 印 introduces the seal.</p>
+  <div class="toolbar">
+    <div class="seg" role="group" aria-label="Filter by grade" data-i18n-aria-label="filterLabel" id="grade-filter"></div>
+    <input type="search" id="alpha-search" data-i18n-placeholder="alphaSearch" placeholder="Find a kanji or a number" aria-label="Find a kanji or a number" data-i18n-aria-label="alphaSearch">
+  </div>
+  <div class="alpha-body">
+    <div>
+      <div class="grid" id="grid" lang="ja"></div>
+      <p class="hint" id="alpha-count"></p>
+    </div>
+    <aside class="inspector" id="alpha-inspector" aria-live="polite" aria-label="Inspector" data-i18n-aria-label="inspector">
+      <p class="hint" data-i18n="inspectHint">Point at or tap a kanji to inspect it.</p>
+    </aside>
+  </div>
+</section>
+
+<!-- ── how it works ──────────────────────────────────────────────────────── -->
+<section id="how" role="tabpanel" aria-labelledby="tab-how" hidden>
+  <ol class="steps">
+    <li><span class="num" lang="ja">一</span><div><h2 data-i18n="how1h">Cut the bytes into blocks of five</h2><p data-i18n="how1">Five bytes are forty bits. Forty bits make four numbers from 0 to 1023.</p></div></li>
+    <li><span class="num" lang="ja">二</span><div><h2 data-i18n="how2h">Write each number as a kanji</h2><p data-i18n="how2">The 1024 kanji are ordered by code point: 0 is 一, 1 is 丁, … 1023 is 鼻. Every one is taught by the end of primary school.</p></div></li>
+    <li><span class="num" lang="ja">三</span><div><h2 data-i18n="how3h">Close the end, and seal if you like</h2><p data-i18n="how3">A short last block needs one to four kanji. Only a four-byte remainder is ambiguous, so it ends with 終. An optional 印 and two more kanji form a checksum.</p></div></li>
+  </ol>
+  <figure class="diagram">
+    <img src="images/bit-layout.svg" alt="Five bytes, forty bits, regrouped into four ten-bit values, each written as one kanji." width="800" height="352">
+  </figure>
+  <h2 class="sc-h" data-i18n="whenH">When it helps</h2>
+  <ul class="uses" data-i18n-html="whenList">
+    <li>Reading a fingerprint or key aloud, or copying it by hand: 32 bytes become 26 familiar kanji.</li>
+    <li>Passing data through places that accept Japanese text but mangle symbols.</li>
+    <li>Short codes that look at home in Japanese print.</li>
+  </ul>
+  <h2 class="sc-h" data-i18n="whenNotH">When it does not</h2>
+  <ul class="uses" data-i18n-html="whenNotList">
+    <li>Saving bytes: each kanji costs three bytes in UTF-8, so the result is larger than base64.</li>
+    <li>Keeping secrets: this is a notation, not encryption. Anyone can read it back.</li>
+    <li>Web addresses: kanji in a URL are escaped to nine ASCII characters each.</li>
+  </ul>
+  <p><a href="https://github.com/didvc/kanji1024/blob/main/SPEC.md" data-i18n="specLink">Read the full specification</a></p>
+</section>
+</main>
+
+<footer>
+  <div class="rule" aria-hidden="true"></div>
+  <p data-i18n="footer">kanji1024 is a notation, not encryption. It runs only in your browser and sends nothing anywhere. Not affiliated with any government body; the character list is the public school allocation table.</p>
+  <p class="small"><a href="api/">API</a> · <span data-i18n="licence">Code under Apache-2.0, specification and data under CC BY 4.0.</span> <span id="version"></span></p>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<noscript><p class="noscript">This workbench needs JavaScript. The specification and the command line tool work without it.</p></noscript>
+</body>
+</html>

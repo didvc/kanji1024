@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<title>kanji1024 API</title>
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<style>
+  :root { --paper: #f3eee4; --ink: #1f1b16; }
+  @media (prefers-color-scheme: dark) { :root { --paper: #1a1714; --ink: #ece4d6; } }
+  body { margin: 0; background: var(--paper); color: var(--ink); }
+  pre { margin: 0; padding: 16px; font: 14px/1.55 ui-monospace, monospace; white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>
+<script type="module">
+  import { handle } from "./api.mjs";
+  const out = document.getElementById("out");
+  let r;
+  try { r = handle(new URLSearchParams(location.search)); }
+  catch (e) { r = { ok: false, error: { code: "internal", message: String(e?.message ?? e) } }; }
+  if (r) out.textContent = JSON.stringify(r, null, 2);
+  document.documentElement.dataset.status = r ? (r.ok ? "ok" : "error") : "guide";
+</script>
+</head>
+<body>
+<pre id="out">kanji1024 API
+
+This page computes its answer in the browser. Fetched without running
+scripts (for example with a plain HTTP client), you get this guide.
+In a browser, or a headless browser that runs scripts, the page body is
+replaced by a JSON result. When it is done, the html element carries
+data-status="ok", "error" or "guide".
+
+Requests (query string, UTF-8, percent-encoded):
+
+  ?op=encode&amp;text=Hello          encode text
+  ?op=encode&amp;hex=48656c6c6f      encode bytes given as hex
+  ?op=encode&amp;base64=SGVsbG8=     encode bytes given as base64
+      options: seal=1  group=N  wrap=N  sep=ascii
+
+  ?op=decode&amp;kanji=専灰色判      decode
+      options: lenient=1
+      returns bytes, text (null if not UTF-8), hex, base64, sealOk, warnings
+
+  ?op=describe&amp;c=未末           value, bits, grade and look-alikes per character
+  ?op=alphabet                  the full character table
+  ?op=version                   the implementation version
+
+Every result has "ok", "op" and "version"; failures add
+"error": { "code", "message", "position"? }.
+
+Without a browser, use the same code directly:
+  module   ../src/kanji1024.mjs (importable from other pages)
+  CLI      node bin/kanji1024.mjs --help   (in the repository)
+
+Specification: https://github.com/didvc/kanji1024/blob/main/SPEC.md
+</pre>
+</body>
+</html>

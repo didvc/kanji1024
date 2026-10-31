@@ -1,0 +1,11 @@
+{
+  "name": "kanji1024",
+  "short_name": "kanji1024",
+  "description": "Write any data as the kanji taught in Japanese primary school, and read it back.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#f3eee4",
+  "theme_color": "#b53a26",
+  "icons": [{ "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}
